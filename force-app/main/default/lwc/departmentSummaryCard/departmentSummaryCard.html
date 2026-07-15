@@ -1,0 +1,60 @@
+<template>
+    <lightning-card title="Department Summary" icon-name="standard:hierarchy">
+        <div class="slds-var-p-around_medium">
+            <!-- No Account Id state -->
+            <template if:false={accountId}>
+                <div class="slds-text-align_center slds-text-color_weak slds-p-around_medium">
+                    Please select an Account to view departments
+                </div>
+            </template>
+
+            <!-- Active Account Context -->
+            <template if:true={accountId}>
+                <!-- Spinner -->
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                
+                <!-- Error Message -->
+                <template if:true={errorMsg}>
+                    <div class="slds-text-color_error slds-m-bottom_medium">
+                        Error loading departments: {errorMsg}
+                    </div>
+                </template>
+
+                <!-- Data Available -->
+                <template if:true={departments}>
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium slds-text-align_center slds-box slds-box_small slds-theme_shade">
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="slds-text-title slds-text-color_weak">Total Departments</div>
+                            <div class="slds-text-heading_large slds-text-color_default slds-font-weight-bold">
+                                {totalDepartmentsCount}
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="slds-text-title slds-text-color_weak">Total Head Count</div>
+                            <div class="slds-text-heading_large slds-text-color_default slds-font-weight-bold">
+                                {totalHeadCount}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="slds-m-around_none">
+                        <template for:each={departments} for:item="dept">
+                            <li key={dept.Id} class="slds-box slds-m-bottom_x-small">
+                                <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+                                    <div class="slds-text-heading_small slds-font-weight-bold slds-truncate">
+                                        {dept.Name}
+                                    </div>
+                                    <div class="slds-m-left_small slds-shrink-none">
+                                        <lightning-badge label={dept.Status__c} class={dept.statusClass}></lightning-badge>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

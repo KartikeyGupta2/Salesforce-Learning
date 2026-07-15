@@ -1,17 +1,65 @@
 <template>
-    <lightning-card title="Employee Directory" icon-name="standard:contact">
-        <template if:true={contacts}>
-            <div class="slds-m-around_medium" style="height: 300px;">
-                <lightning-datatable
-                    key-field="Id"
-                    data={contacts}
-                    columns={columns}
-                    hide-checkbox-column>
-                </lightning-datatable>
+    <lightning-card title="Contact Directory" icon-name="standard:contact">
+        <div class="slds-var-p-around_medium">
+            <lightning-input 
+                type="search" 
+                label="Search by name..." 
+                onchange={handleSearchChange} 
+                class="slds-m-bottom_small">
+            </lightning-input>
+            
+            <div class="slds-text-title slds-m-bottom_medium">
+                Showing {contactCount} contacts
             </div>
-        </template>
-        <template if:true={error}>
-            <div class="slds-text-color_error slds-p-around_medium">{error}</div>
-        </template>
+
+            <!-- Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            
+            <!-- Error Message -->
+            <template if:true={errorMsg}>
+                <div class="slds-text-color_error slds-m-bottom_medium">
+                    Error loading contacts: {errorMsg}
+                </div>
+            </template>
+            
+            <!-- Contact List -->
+            <template if:true={filteredContacts}>
+                <ul class="slds-m-around_none">
+                    <template for:each={filteredContacts} for:item="contact">
+                        <li key={contact.Id} class="slds-box slds-m-bottom_small">
+                            <div class="slds-text-heading_small slds-font-weight-bold">
+                                {contact.Name}
+                            </div>
+                            
+                            <template if:true={contact.hasTitleOrDept}>
+                                <div class="slds-m-top_xxx-small">
+                                    {contact.titleDeptText}
+                                </div>
+                            </template>
+                            
+                            <template if:true={contact.Email}>
+                                <div class="slds-m-top_xxx-small">
+                                    <lightning-icon icon-name="utility:email" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    <a href={contact.mailtoLink}>{contact.Email}</a>
+                                </div>
+                            </template>
+                            
+                            <template if:true={contact.Phone}>
+                                <div class="slds-m-top_xxx-small">
+                                    <lightning-icon icon-name="utility:call" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    <a href={contact.telLink}>{contact.Phone}</a>
+                                </div>
+                            </template>
+                            
+                            <div class="slds-text-title slds-text-color_weak slds-m-top_xx-small">
+                                Account: {contact.accountName}
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
     </lightning-card>
 </template>

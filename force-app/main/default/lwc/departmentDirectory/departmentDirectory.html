@@ -1,0 +1,54 @@
+<template>
+    <lightning-card title="Department Directory" icon-name="standard:hierarchy">
+        <lightning-button 
+            slot="actions" 
+            label={toggleButtonLabel} 
+            onclick={handleToggle}>
+        </lightning-button>
+        
+        <div class="slds-var-p-around_medium">
+            <!-- Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            
+            <!-- Error Message -->
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-m-bottom_medium">
+                    Error loading departments: {errorMsg}
+                </div>
+            </template>
+            
+            <!-- Department List -->
+            <template if:true={departments}>
+                <ul class="slds-m-around_none">
+                    <template for:each={departments} for:item="dept">
+                        <li key={dept.Id} class="slds-box slds-m-bottom_small">
+                            <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                                <!-- Details -->
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                                    <div class="slds-text-heading_small slds-font-weight-bold">
+                                        {dept.Name}
+                                    </div>
+                                    <div class="slds-m-top_xxx-small">
+                                        Manager: {dept.Manager_Name__c}
+                                    </div>
+                                    <div class="slds-m-top_xxx-small">
+                                        Head Count: {dept.Head_Count__c} &nbsp;|&nbsp; Budget: {dept.formattedBudget}
+                                    </div>
+                                    <div class="slds-text-title slds-m-top_xx-small">
+                                        Account: {dept.accountName}
+                                    </div>
+                                </div>
+                                <!-- Badge -->
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-text-align_right slds-p-top_small slds-medium-p-top_none">
+                                    <lightning-badge label={dept.Status__c} class={dept.statusClass}></lightning-badge>
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>

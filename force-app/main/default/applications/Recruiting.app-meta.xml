@@ -10,7 +10,7 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
-    <label>Recruitment Management System</label>
+    <label>Recruitment System</label>
     <navType>Standard</navType>
     <tabs>Position__c</tabs>
     <tabs>Candidate__c</tabs>
