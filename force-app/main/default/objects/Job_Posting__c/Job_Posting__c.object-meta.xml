@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <label>Job Posting</label>
+    <pluralLabel>Job Postings</pluralLabel>
+    <nameField>
+        <displayFormat>JP-{00000}</displayFormat>
+        <label>Job Posting Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

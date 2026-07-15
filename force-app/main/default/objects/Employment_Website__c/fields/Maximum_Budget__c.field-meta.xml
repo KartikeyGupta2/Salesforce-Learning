@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maximum_Budget__c</fullName>
+    <label>Maximum Budget</label>
+    <type>Currency</type>
+    <precision>6</precision>
+    <scale>2</scale>
+    <required>true</required>
+</CustomField>

@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Employee Directory" icon-name="standard:contact">
+        <template if:true={contacts}>
+            <div class="slds-m-around_medium" style="height: 300px;">
+                <lightning-datatable
+                    key-field="Id"
+                    data={contacts}
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-p-around_medium">{error}</div>
+        </template>
+    </lightning-card>
+</template>
