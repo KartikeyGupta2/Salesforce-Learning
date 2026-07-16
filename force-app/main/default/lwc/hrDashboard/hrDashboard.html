@@ -1,0 +1,304 @@
+<template>
+    <div class="dashboard-container slds-p-around_medium">
+        <!-- Spinner Overlay -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading HR Analytics..." size="large"></lightning-spinner>
+        </template>
+
+        <!-- Header -->
+        <div class="slds-page-header slds-m-bottom_medium header-banner">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="custom:custom62" size="medium" alternative-text="HR Dashboard"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate" title="HR Dashboard">HR Operational Control Center</span>
+                                    </h1>
+                                </div>
+                            </div>
+                            <p class="slds-page-header__sub-title">Real-time recruitment funnel metrics, offer approvals, and onboarding task tracking.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <lightning-button label="Refresh" icon-name="utility:refresh" onclick={handleRefresh} variant="brand"></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State Illustration -->
+        <template if:true={error}>
+            <div class="slds-align_absolute-center slds-m-vertical_xx-large">
+                <div class="slds-text-align_center">
+                    <lightning-icon icon-name="utility:error" variant="error" size="large" class="slds-m-bottom_medium"></lightning-icon>
+                    <h3 class="slds-text-heading_medium slds-text-color_error">Unable to Load Dashboard Data</h3>
+                    <p class="slds-m-vertical_small">{error}</p>
+                    <lightning-button label="Retry" variant="neutral" onclick={handleRefresh}></lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={error}>
+            <!-- Metric Cards -->
+            <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_large">
+                <!-- Card 1 -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                    <div class="kpi-card card-indigo">
+                        <div class="card-content">
+                            <p class="card-label">Active Openings</p>
+                            <h2 class="card-value">{stats.openPositions}</h2>
+                            <lightning-icon icon-name="utility:record" size="small" variant="inverse" class="card-icon"></lightning-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                    <div class="kpi-card card-blue">
+                        <div class="card-content">
+                            <p class="card-label">Active Candidates</p>
+                            <h2 class="card-value">{stats.activeApplications}</h2>
+                            <lightning-icon icon-name="utility:groups" size="small" variant="inverse" class="card-icon"></lightning-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                    <div class="kpi-card card-amber">
+                        <div class="card-content">
+                            <p class="card-label">Pending Offer Approvals</p>
+                            <h2 class="card-value">{stats.pendingOffers}</h2>
+                            <lightning-icon icon-name="utility:assignment" size="small" variant="inverse" class="card-icon"></lightning-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                    <div class="kpi-card card-emerald">
+                        <div class="card-content">
+                            <p class="card-label">Avg Interview Rating</p>
+                            <h2 class="card-value">{stats.avgInterviewRating} / 4.0</h2>
+                            <lightning-icon icon-name="utility:favorite" size="small" variant="inverse" class="card-icon"></lightning-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary Work Panels -->
+            <div class="slds-grid slds-wrap slds-gutters">
+                <!-- Left Panel: Offer Approvals -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-bottom_medium">
+                    <article class="slds-card panel-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <lightning-icon icon-name="standard:employee_asset" size="small"></lightning-icon>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-title_bold">Offer Letters Approval Center</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner scrollable-container">
+                            <template if:true={hasPendingOffers}>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-no-row-hover">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col"><div class="slds-truncate" title="Candidate">Candidate</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Position">Position</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="CTC">CTC</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Joining Date">Joining</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Actions">Actions</div></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={pendingOffers} for:item="offer">
+                                            <tr class="slds-hint-parent" key={offer.Id}>
+                                                <td>
+                                                    <div class="slds-truncate slds-text-title_bold">{offer.candidateName}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{offer.positionName}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <lightning-formatted-number value={offer.CTC__c} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <lightning-formatted-date-time value={offer.Joining_Date__c}></lightning-formatted-date-time>
+                                                    </div>
+                                                </td>
+                                                <td class="action-buttons-cell">
+                                                    <lightning-button-group>
+                                                        <lightning-button label="Approve" variant="success" size="sm" data-id={offer.Id} onclick={handleApproveOffer} icon-name="utility:check"></lightning-button>
+                                                        <lightning-button label="Reject" variant="destructive" size="sm" data-id={offer.Id} onclick={handlePromptReject} icon-name="utility:close"></lightning-button>
+                                                    </lightning-button-group>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template if:false={hasPendingOffers}>
+                                <div class="empty-state">
+                                    <lightning-icon icon-name="utility:smiley_and_people" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                                    <p class="slds-text-color_weak">No pending offer approvals found. Outstanding job!</p>
+                                </div>
+                            </template>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Right Panel: Onboarding Progress -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-bottom_medium">
+                    <article class="slds-card panel-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <lightning-icon icon-name="standard:coaching" size="small"></lightning-icon>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-title_bold">Onboarding Tracker (Joined Candidates)</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner scrollable-container">
+                            <template if:true={hasOnboardingHires}>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-no-row-hover">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col"><div class="slds-truncate" title="Candidate">Candidate</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Buddy">Buddy</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Orientation">Orientation</div></th>
+                                            <th class="" scope="col"><div class="slds-truncate" title="Checklist Progress">Checklist Progress</div></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={onboardingHires} for:item="onb">
+                                            <tr class="slds-hint-parent" key={onb.applicationId}>
+                                                <td>
+                                                    <div class="slds-truncate slds-text-title_bold">
+                                                        <a href={onb.applicationUrl} target="_blank">{onb.candidateName}</a>
+                                                    </div>
+                                                    <div class="slds-text-color_weak slds-text-body_small">{onb.positionTitle}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{onb.buddyName}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">
+                                                        <lightning-formatted-date-time value={onb.orientationDate}></lightning-formatted-date-time>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                                                        <span class="slds-text-body_small">{onb.verifiedTasks}/{onb.totalTasks} Tasks Verified</span>
+                                                        <span class="slds-text-body_small slds-text-title_bold">{onb.progressPercent}%</span>
+                                                    </div>
+                                                    <div class="progress-bar-container">
+                                                        <div class="progress-bar-fill" style={onb.progressStyle}></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template if:false={hasOnboardingHires}>
+                                <div class="empty-state">
+                                    <lightning-icon icon-name="utility:locker_room" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                                    <p class="slds-text-color_weak">No candidates in active onboarding currently.</p>
+                                </div>
+                            </template>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Recent Sourced Candidates Funnel -->
+            <div class="slds-grid slds-wrap slds-m-top_medium">
+                <div class="slds-col slds-size_1-of-1">
+                    <article class="slds-card panel-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <lightning-icon icon-name="standard:lead" size="small"></lightning-icon>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-title_bold">Recent Sourced Candidates &amp; Stages</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col"><div class="slds-truncate" title="Application ID">Application ID</div></th>
+                                        <th class="" scope="col"><div class="slds-truncate" title="Candidate Name">Candidate</div></th>
+                                        <th class="" scope="col"><div class="slds-truncate" title="Applied Role">Applied Role</div></th>
+                                        <th class="" scope="col"><div class="slds-truncate" title="Current Stage">Current Stage</div></th>
+                                        <th class="" scope="col"><div class="slds-truncate" title="Age in Pipeline">Age in Pipeline</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={recentApplications} for:item="app">
+                                        <tr class="slds-hint-parent" key={app.Id}>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <a href={app.applicationUrl} target="_blank">{app.Name}</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate slds-text-title_bold">{app.candidateName}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{app.positionName}</div>
+                                            </td>
+                                            <td>
+                                                <span class={app.badgeClass}>{app.Status__c}</span>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{app.Age_In_Days__c} Days</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Rejection Dialog Modal -->
+    <template if:true={isRejectionModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header modal-header-destructive">
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Reject Candidate Offer</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-textarea label="Please enter a detailed rejection reason" value={rejectionReason} onchange={handleReasonChange} required></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" variant="neutral" onclick={handleCloseRejectionModal} class="slds-m-right_x-small"></lightning-button>
+                    <lightning-button label="Confirm Rejection" variant="destructive" onclick={handleConfirmRejection} disabled={isRejectionConfirmDisabled}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

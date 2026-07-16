@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Job_Application__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Job Applications with associated Interviews.</description>
+    <join>
+        <outerJoin>true</outerJoin>
+        <relationship>Interviews__r</relationship>
+    </join>
+    <label>Job Applications with Interviews</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Name</field>
+            <table>Job_Application__c</table>
+        </columns>
+        <masterLabel>Job Application Fields</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Name</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Round__c</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Status__c</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Feedback__c</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Interviewer__c</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Rating__c</field>
+            <table>Job_Application__c.Interviews__r</table>
+        </columns>
+        <masterLabel>Interview Fields</masterLabel>
+    </sections>
+</ReportType>

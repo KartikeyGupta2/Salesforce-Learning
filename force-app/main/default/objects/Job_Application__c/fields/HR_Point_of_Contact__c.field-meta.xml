@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HR_Point_of_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The HR representative responsible for coordinating this candidate's onboarding.</description>
+    <externalId>false</externalId>
+    <label>HR Point of Contact</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>HR_Contacts</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

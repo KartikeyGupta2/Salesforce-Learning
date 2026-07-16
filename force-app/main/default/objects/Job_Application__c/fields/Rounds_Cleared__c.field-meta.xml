@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rounds_Cleared__c</fullName>
+    <description>Number of interview rounds completed and cleared (Rating is Yes or Strong Yes).</description>
+    <externalId>false</externalId>
+    <label>Rounds Cleared</label>
+    <summaryFilterItems>
+        <field>Interview__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Completed</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>Interview__c.Rating__c</field>
+        <operation>equals</operation>
+        <value>Yes, Strong Yes</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Interview__c.Job_Application__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

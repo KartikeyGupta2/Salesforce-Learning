@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Screening_Experience_Match__c</fullName>
+    <description>Experience alignment rating from screening call.</description>
+    <externalId>false</externalId>
+    <label>Screening Experience Match</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 - Poor</fullName>
+                <default>false</default>
+                <label>1 - Poor</label>
+            </value>
+            <value>
+                <fullName>2 - Below Average</fullName>
+                <default>false</default>
+                <label>2 - Below Average</label>
+            </value>
+            <value>
+                <fullName>3 - Average</fullName>
+                <default>false</default>
+                <label>3 - Average</label>
+            </value>
+            <value>
+                <fullName>4 - Good</fullName>
+                <default>false</default>
+                <label>4 - Good</label>
+            </value>
+            <value>
+                <fullName>5 - Excellent</fullName>
+                <default>false</default>
+                <label>5 - Excellent</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

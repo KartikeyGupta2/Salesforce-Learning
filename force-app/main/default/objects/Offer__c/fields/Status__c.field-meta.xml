@@ -1,58 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
+    <description>Status of the offer letter record.</description>
+    <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>New</fullName>
+                <fullName>Draft</fullName>
                 <default>true</default>
-                <label>New</label>
+                <label>Draft</label>
             </value>
             <value>
-                <fullName>Applied</fullName>
+                <fullName>Pending Approval</fullName>
                 <default>false</default>
-                <label>Applied</label>
+                <label>Pending Approval</label>
             </value>
             <value>
-                <fullName>Screening</fullName>
+                <fullName>Approved</fullName>
                 <default>false</default>
-                <label>Screening</label>
+                <label>Approved</label>
             </value>
             <value>
-                <fullName>Shortlisted</fullName>
+                <fullName>Sent</fullName>
                 <default>false</default>
-                <label>Shortlisted</label>
+                <label>Sent</label>
             </value>
             <value>
-                <fullName>Interview</fullName>
+                <fullName>Accepted</fullName>
                 <default>false</default>
-                <label>Interview</label>
-            </value>
-            <value>
-                <fullName>Selected</fullName>
-                <default>false</default>
-                <label>Selected</label>
-            </value>
-            <value>
-                <fullName>Offer Sent</fullName>
-                <default>false</default>
-                <label>Offer Sent</label>
-            </value>
-            <value>
-                <fullName>Joined</fullName>
-                <default>false</default>
-                <label>Joined</label>
+                <label>Accepted</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>
                 <default>false</default>
                 <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Negotiating</fullName>
+                <default>false</default>
+                <label>Negotiating</label>
             </value>
         </valueSetDefinition>
     </valueSet>

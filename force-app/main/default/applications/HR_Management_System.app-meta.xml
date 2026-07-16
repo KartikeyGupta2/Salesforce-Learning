@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#1F3864</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Enterprise Recruitment &amp; HR Management System for tracking job openings, candidate pipelines, scheduled interview loops, tiered offer approvals, and basic onboarding checklists.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>HR Management System</label>
+    <navType>Standard</navType>
+    <tabs>HR_Dashboard</tabs>
+    <tabs>Position__c</tabs>
+    <tabs>Candidate__c</tabs>
+    <tabs>Job_Application__c</tabs>
+    <tabs>Department__c</tabs>
+    <tabs>Interview__c</tabs>
+    <tabs>Offer__c</tabs>
+    <tabs>Onboarding_Task__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

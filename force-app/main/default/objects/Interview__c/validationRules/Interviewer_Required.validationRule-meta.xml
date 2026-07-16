@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interviewer_Required</fullName>
+    <active>true</active>
+    <description>Ensures that an interviewer is selected when the interview is Scheduled, Completed, or Rescheduled.</description>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Status__c, "Scheduled"), ISPICKVAL(Status__c, "Completed"), ISPICKVAL(Status__c, "Rescheduled")), ISBLANK(Interviewer__c))</errorConditionFormula>
+    <errorDisplayField>Interviewer__c</errorDisplayField>
+    <errorMessage>An interviewer must be assigned to scheduled, completed, or rescheduled interviews.</errorMessage>
+</ValidationRule>

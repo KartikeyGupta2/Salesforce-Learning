@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Job_Application__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Job Applications with Onboarding Tasks.</description>
+    <label>Job Applications with Onboarding</label>
+    <join>
+        <relationship>Onboarding_Tasks__r</relationship>
+        <outerJoin>true</outerJoin>
+    </join>
+    <sections>
+        <masterLabel>Job Application Fields</masterLabel>
+        <columns>
+            <field>Name</field>
+            <table>Job_Application__c</table>
+        </columns>
+    </sections>
+</ReportType>

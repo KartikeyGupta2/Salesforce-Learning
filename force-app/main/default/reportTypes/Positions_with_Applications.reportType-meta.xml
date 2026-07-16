@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Position__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Positions with associated Job Applications.</description>
+    <label>Positions with Job Applications</label>
+    <join>
+        <relationship>Job_Applications__r</relationship>
+        <outerJoin>true</outerJoin>
+    </join>
+    <sections>
+        <masterLabel>Position Fields</masterLabel>
+        <columns>
+            <field>Name</field>
+            <table>Position__c</table>
+        </columns>
+    </sections>
+</ReportType>

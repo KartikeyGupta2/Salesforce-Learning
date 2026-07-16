@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Position__c.Location__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Type__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Job_Level__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Hiring_Manager__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Target_Hires__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Hired_Count__c</field>
+    </columns>
+    <columns>
+        <field>Position__c.Open_Capacity__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Position__c.Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Open - Approved</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Position__c.Department__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Open Positions by Department</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Position__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

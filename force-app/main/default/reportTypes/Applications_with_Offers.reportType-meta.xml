@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Job_Application__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Job Applications with associated Offers.</description>
+    <label>Job Applications with Offers</label>
+    <join>
+        <relationship>Offers__r</relationship>
+        <outerJoin>true</outerJoin>
+    </join>
+    <sections>
+        <masterLabel>Job Application Fields</masterLabel>
+        <columns>
+            <field>Name</field>
+            <table>Job_Application__c</table>
+        </columns>
+    </sections>
+    <sections>
+        <masterLabel>Offer Fields</masterLabel>
+        <columns>
+            <field>Name</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+        <columns>
+            <field>Designation__c</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+        <columns>
+            <field>CTC__c</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+        <columns>
+            <field>Joining_Date__c</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+        <columns>
+            <field>Rejection_Reason__c</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+        <columns>
+            <field>Status__c</field>
+            <table>Job_Application__c.Offers__r</table>
+        </columns>
+    </sections>
+</ReportType>
